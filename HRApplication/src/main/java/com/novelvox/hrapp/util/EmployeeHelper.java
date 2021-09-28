@@ -37,7 +37,7 @@ import com.novelvox.hrapp.exception.EmployeeValidationException;
  */
 public class EmployeeHelper {
 
-	public static final String DB_URL = "jdbc:ucanaccess://C:/Users/dmehar/Workspaces/NetAct/HRApplication/EmpDB.accdb";
+	public static final String DB_URL = "jdbc:ucanaccess://./resources/EmpDB.accdb";
 
 	public static final String INSERT_QUERY = "insert into Emp1([ID],[Emp_Name],[Aadhar_No],[Email_ID],[Mobile_No],[DOB],[Profile],[Salary],[DOJ],[Address]) values (?,?,?,?,?,?,?,?,?,?)";
 	public static final String UPDATE_QUERY = "update Emp1 set ID=?, Emp_Name=?, Aadhar_No=?, Email_ID=?,Mobile_No=?,DOB=?,Profile=?,Salary=?,DOJ=?,Address=? where ID=";
@@ -45,7 +45,7 @@ public class EmployeeHelper {
 	public static final String DELETE_QUERY = "delete from Emp1 where id=";
 	public static final String SELECT_DEFAULT = "<select>";
 
-    public static final String NV_LOGO = "C:/Users/dmehar/Workspaces/NetAct/HRApplication/NovelVox-Logo.jpg";
+    public static final String NV_LOGO = "./resources/NovelVox-Logo.jpg";
 
 	public static JLabel newEmpHeading = new JLabel("New Employee");
 	public static JLabel searchEmpHeading = new JLabel("Search Employee Details");
