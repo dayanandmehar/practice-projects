@@ -16,7 +16,7 @@ public class Employee {
 	private String mobileNumber;
 	private String dob;
 	private String profile;
-	private String salary;
+	private Double ctc;
 	private String doj;
 	private String address;
 
@@ -105,18 +105,18 @@ public class Employee {
 		this.profile = profile;
 	}
 	/**
-	 * @return the salary
+	 * @return
 	 */
-	public String getSalary() {
-		return salary;
-	}
-	/**
-	 * @param salary the salary to set
-	 */
-	public void setSalary(String salary) {
-		this.salary = salary;
-	}
-	/**
+	public Double getCtc() {
+        return ctc;
+    }
+    /**
+     * @param ctc
+     */
+    public void setCtc(Double ctc) {
+        this.ctc = ctc;
+    }
+    /**
 	 * @return the doj
 	 */
 	public String getDoj() {

@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.novelvox.hrapp.exception.EmployeeValidationException;
 import com.novelvox.hrapp.util.Employee;
+import com.novelvox.hrapp.util.EmployeeConstant;
 import com.novelvox.hrapp.util.EmployeeHelper;
 import com.novelvox.hrapp.util.PDFGenarator;
 
@@ -26,18 +27,17 @@ import com.novelvox.hrapp.util.PDFGenarator;
 class EmpSalarySlips extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-
-    EmployeeHelper empHelper = null;
+    private EmployeeHelper empHelper = null;
 
     EmpSalarySlips() {
         setLayout(null);
         setBackground(Color.CYAN);
 
         empHelper = new EmployeeHelper();
-        add(EmployeeHelper.salarySlipHeading);
+        add(EmployeeConstant.salarySlipHeading);
         add(empHelper.idLabel);
         add(empHelper.idField);
-        
+
         add(empHelper.monthField);
         add(empHelper.monthLabel);
 
@@ -46,32 +46,32 @@ class EmpSalarySlips extends JPanel implements ActionListener {
         empHelper.exitButton.addActionListener(this);
         add(empHelper.exitButton);
 
-        
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == empHelper.downloadButton) {
+            Statement st = null;
+            ResultSet rs = null;
             try {
                 if (StringUtils.isBlank(empHelper.idField.getText())) {
-                    JOptionPane.showMessageDialog(this, "Please enter employee Id", "Error", JOptionPane.ERROR_MESSAGE);
-                    throw new EmployeeValidationException("Please enter employee Id");
+                    JOptionPane.showMessageDialog(this, EmployeeConstant.ENTER_ID, EmployeeConstant.ERROR, JOptionPane.ERROR_MESSAGE);
+                    throw new EmployeeValidationException(EmployeeConstant.ENTER_ID);
                 }
                 if (empHelper.monthField.getSelectedItem() == null
-                        || EmployeeHelper.SELECT_DEFAULT.equals(empHelper.monthField.getSelectedItem())) {
-                    JOptionPane.showMessageDialog(this, "Please select month", "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    throw new EmployeeValidationException("Please select month from drop down");
+                        || EmployeeConstant.SELECT_DEFAULT.equals(empHelper.monthField.getSelectedItem())) {
+                    JOptionPane.showMessageDialog(this, EmployeeConstant.SELECT_MONTH, EmployeeConstant.ERROR, JOptionPane.ERROR_MESSAGE);
+                    throw new EmployeeValidationException(EmployeeConstant.SELECT_MONTH);
                 }
 
                 EmployeeHelper.createConnection();
-                Statement st = EmployeeHelper.con.createStatement();
+                st = EmployeeConstant.con.createStatement();
 
-                String searchQuery = EmployeeHelper.SEARCH_QUERY + empHelper.idField.getText();
-                ResultSet rs = st.executeQuery(searchQuery);
+                String searchQuery = EmployeeConstant.SEARCH_QUERY + empHelper.idField.getText();
+                rs = st.executeQuery(searchQuery);
 
                 Employee employee = empHelper.readEmployeeDetails(rs);
                 if (employee == null) {
-                    JOptionPane.showMessageDialog(this, "Employee Id is not found", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, EmployeeConstant.ID_NOT_FOUND, EmployeeConstant.ERROR, JOptionPane.ERROR_MESSAGE);
                 } else {
                     String selectedMonth = (String) empHelper.monthField.getSelectedItem();
                     String selectedFile = employee.getEmpName() + "_" + selectedMonth + "_Payslip.pdf";
@@ -81,18 +81,28 @@ class EmpSalarySlips extends JPanel implements ActionListener {
                     int returnVal = chooser.showSaveDialog(this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                         PDFGenarator.generateSalarySlip(employee, selectedMonth, chooser.getSelectedFile());
-                        JOptionPane.showMessageDialog(this, chooser.getSelectedFile() +" file downloaded successfully.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this,
+                                chooser.getSelectedFile().getName() + " file downloaded successfully.", EmployeeConstant.INFO,
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-                st.close();
-                rs.close();
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-            }
+            } finally {
+                try {
+                    EmployeeConstant.con.close();
+                    st.close();
+                    rs.close();
+                } catch (Exception e) {
+                    // Do nothing
+                }
 
+            }
         }
 
         if (ae.getSource() == empHelper.exitButton) {
+            EmployeeHelper.closeConnection();
             System.exit(0);
         }
 

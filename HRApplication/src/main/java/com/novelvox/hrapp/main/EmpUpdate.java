@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.novelvox.hrapp.exception.EmployeeValidationException;
 import com.novelvox.hrapp.util.Employee;
+import com.novelvox.hrapp.util.EmployeeConstant;
 import com.novelvox.hrapp.util.EmployeeHelper;
 
 /**
@@ -22,135 +23,140 @@ import com.novelvox.hrapp.util.EmployeeHelper;
 
 class EmpUpdate extends JPanel implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private EmployeeHelper empHelper = null;
 
-	EmployeeHelper empHelper = null;
+    EmpUpdate() {
+        setLayout(null);
+        setBackground(Color.CYAN);
 
-	EmpUpdate() {
-		setLayout(null);
-		setBackground(Color.CYAN);
+        empHelper = new EmployeeHelper();
+        add(EmployeeConstant.updateEmpHeading);
+        add(empHelper.idLabel);
+        add(empHelper.idField);
 
-		empHelper = new EmployeeHelper();
-		add(EmployeeHelper.updateEmpHeading);
-		add(empHelper.idLabel);
-		add(empHelper.idField);
+        add(empHelper.nameField);
+        add(empHelper.aadharNoField);
+        add(empHelper.emailIdField);
+        add(empHelper.mobNoField);
+        add(empHelper.dobField);
+        add(empHelper.profileField);
+        add(empHelper.ctcField);
+        add(empHelper.dojField);
+        add(empHelper.addressField);
 
-		add(empHelper.nameField);
-		add(empHelper.aadharNoField);
-		add(empHelper.emailIdField);
-		add(empHelper.mobNoField);
-		add(empHelper.dobField);
-		add(empHelper.profileField);
-		add(empHelper.salaryField);
-		add(empHelper.dojField);
-		add(empHelper.addressField);
+        add(empHelper.nameLabel);
+        add(empHelper.aadharLabel);
+        add(empHelper.emailLabel);
+        add(empHelper.mobNoLabel);
+        add(empHelper.dobLabel);
+        add(empHelper.profileLabel);
+        add(empHelper.ctcLabel);
+        add(empHelper.dojLabel);
+        add(empHelper.addressLabel);
 
-		add(empHelper.nameLabel);
-		add(empHelper.aadharLabel);
-		add(empHelper.emailLabel);
-		add(empHelper.mobNoLabel);
-		add(empHelper.dobLabel);
-		add(empHelper.profileLabel);
-		add(empHelper.salaryLabel);
-		add(empHelper.dojLabel);
-		add(empHelper.addressLabel);
+        add(empHelper.clearButton);
+        empHelper.clearButton.addActionListener(this);
 
-		add(empHelper.clearButton);
-		empHelper.clearButton.addActionListener(this);
+        add(empHelper.searchButton);
+        empHelper.searchButton.addActionListener(this);
 
-		add(empHelper.searchButton);
-		empHelper.searchButton.addActionListener(this);
+        add(empHelper.updateButton);
+        empHelper.updateButton.addActionListener(this);
 
-		add(empHelper.updateButton);
-		empHelper.updateButton.addActionListener(this);
+        add(empHelper.deleteButton);
+        empHelper.deleteButton.addActionListener(this);
 
-		add(empHelper.deleteButton);
-		empHelper.deleteButton.addActionListener(this);
+        empHelper.hideElements();
 
-		empHelper.hideElements();
+    }
 
-	}
+    @SuppressWarnings("deprecation")
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == empHelper.clearButton) {
+            empHelper.clear();
+            empHelper.idField.enable();
+        } else if (ae.getSource() == empHelper.searchButton) {
 
-	@SuppressWarnings("deprecation")
-	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == empHelper.clearButton) {
-			empHelper.clear();
-			empHelper.idField.enable();
-		} else if (ae.getSource() == empHelper.searchButton) {
+            try {
+                EmployeeHelper.createConnection();
+                Statement st = EmployeeConstant.con.createStatement();
+                String searchQuery = EmployeeConstant.SEARCH_QUERY + empHelper.idField.getText();
+                ResultSet rs = st.executeQuery(searchQuery);
 
-			try {
-				EmployeeHelper.createConnection();
-				Statement st = EmployeeHelper.con.createStatement();
-				String searchQuery = EmployeeHelper.SEARCH_QUERY + empHelper.idField.getText();
-				ResultSet rs = st.executeQuery(searchQuery);
+                Employee employee = empHelper.readEmployeeDetails(rs);
+                if (employee == null) {
+                    JOptionPane.showMessageDialog(this, EmployeeConstant.ID_NOT_FOUND, EmployeeConstant.ERROR, JOptionPane.ERROR_MESSAGE);
+                } else {
+                    empHelper.displayEmployeeDetails(employee);
+                    empHelper.idField.disable();
+                }
+                st.close();
+                rs.close();
 
-				Employee employee = empHelper.readEmployeeDetails(rs);
-				if (employee == null) {
-					JOptionPane.showMessageDialog(this, "Employee Id is not found", "Error", JOptionPane.ERROR_MESSAGE);
-				} else {
-					empHelper.displayEmployeeDetails(employee);
-					empHelper.idField.disable();
-				}
-				st.close();
-				rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+        } else if (ae.getSource() == empHelper.deleteButton) {
+            try {
+                int n = JOptionPane.showOptionDialog(this, EmployeeConstant.DELETE_RECORD_QUE + empHelper.idField.getText() + " ?",
+                        EmployeeConstant.DELETE_RECORD_CONF, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                        EmployeeConstant.options, EmployeeConstant.options);
 
-		} else if (ae.getSource() == empHelper.deleteButton) {
-			try {
-				Object[] options = { "Yes", "No" };
+                if (n == JOptionPane.YES_OPTION) {
+                    EmployeeHelper.createConnection();
+                    Statement st = EmployeeConstant.con.createStatement();
+                    String deleteQuery = EmployeeConstant.DELETE_QUERY + empHelper.idField.getText();
+                    int value = st.executeUpdate(deleteQuery);
+                    if (value > 0) {
+                        JOptionPane.showMessageDialog(this, EmployeeConstant.DELETE_RECORD_SUCCESS, EmployeeConstant.INFO,
+                                JOptionPane.INFORMATION_MESSAGE);
+                        empHelper.clear();
+                    } else {
+                        JOptionPane.showMessageDialog(this, EmployeeConstant.DELETE_RECORD_FAILURE, EmployeeConstant.ERROR,
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                System.out.println(e);
+            }
+        } else if (ae.getSource() == empHelper.updateButton) {
+            PreparedStatement pst = null;
+            try {
+                EmployeeHelper.createConnection();
+                Employee employee = empHelper.readEmployeeData();
 
-				int n = JOptionPane.showOptionDialog(this,
-						"Do you like to delete the record for Employee ID: " + empHelper.idField.getText() + " ?",
-						"Delete Confirmation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-						options, options);
+                // Validate data
+                empHelper.doValidation(employee, this);
 
-				if (n == JOptionPane.YES_OPTION) {
-					EmployeeHelper.createConnection();
-					Statement st = EmployeeHelper.con.createStatement();
-					String deleteQuery = EmployeeHelper.DELETE_QUERY + empHelper.idField.getText();
-					int value = st.executeUpdate(deleteQuery);
-					if (value > 0) {
-						JOptionPane.showMessageDialog(this, "Your data has been deleted successfully", "info",
-								JOptionPane.INFORMATION_MESSAGE);
-						empHelper.clear();
-					} else {
-						JOptionPane.showMessageDialog(this, "Failed to delete Employee details", "error",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				System.out.println(e);
-			}
-		} else if (ae.getSource() == empHelper.updateButton) {
-			try {
-				EmployeeHelper.createConnection();
-				Employee employee = empHelper.readEmployeeData();
+                pst = empHelper.createPreparedStmt(employee, EmployeeConstant.UPDATE_QUERY + employee.getEmpId());
+                int n = pst.executeUpdate();
 
-				// Validate data
-				empHelper.doValidation(employee, this);
+                if (n != 0) {
+                    JOptionPane.showMessageDialog(this, EmployeeConstant.UPDATE_RECORD_SUCCESS, EmployeeConstant.INFO,
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, EmployeeConstant.UPDATE_RECORD_FAILURE, EmployeeConstant.ERROR, JOptionPane.ERROR_MESSAGE);
+                }
 
-				PreparedStatement pst = empHelper.createPreparedStmt(employee,
-						EmployeeHelper.UPDATE_QUERY + employee.getEmpId());
-				int n = pst.executeUpdate();
+                pst.close();
 
-				if (n != 0) {
-					JOptionPane.showMessageDialog(this, "Your data has been updated successfully", "info",
-							JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(this, "Data can not be updated", "Error", JOptionPane.ERROR_MESSAGE);
-				}
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, EmployeeConstant.ID_MUSTBE_NUMERIC, EmployeeConstant.ERROR, JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException | EmployeeValidationException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                try {
+                    EmployeeConstant.con.close();
+                    pst.close();
+                } catch (Exception e) {
+                    // Do nothing
+                }
+            }
+        }
 
-				pst.close();
-
-			} catch (SQLException | EmployeeValidationException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-
-	}
+    }
 
 }

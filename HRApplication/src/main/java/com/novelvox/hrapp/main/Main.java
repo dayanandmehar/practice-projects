@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import com.novelvox.hrapp.util.EmployeeHelper;
+import com.novelvox.hrapp.util.EmployeeConstant;
 
 //LOGIN FORM INCLUDING MAIN METHOD
 
@@ -38,7 +38,7 @@ class Main extends JFrame implements ActionListener {
         setLayout(null);
         setBackground(Color.RED);
         try {
-            BufferedImage myPicture = ImageIO.read(new File(EmployeeHelper.NV_LOGO));
+            BufferedImage myPicture = ImageIO.read(new File(EmployeeConstant.NV_LOGO));
             logoLabel = new JLabel(new ImageIcon(myPicture));
         } catch (IOException e1) {
             System.out.println("Failed to load Logo image.");
