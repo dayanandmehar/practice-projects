@@ -2,8 +2,8 @@ package com.novelvox.hrapp.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import com.itextpdf.text.BaseColor;
@@ -220,9 +220,9 @@ public class PDFGenarator {
      */
     private static String getStringValue(Double value) {
         if (value != null) {
-            DecimalFormat df = new DecimalFormat("#.##");
-            df.setRoundingMode(RoundingMode.CEILING);
-            return df.format(value);
+            BigDecimal bd = BigDecimal.valueOf(value);
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            return bd.toString();
         }
         return null;
     }
@@ -257,7 +257,7 @@ public class PDFGenarator {
         while (num > 0) {
             if (i == 0) {
                 rem = (int) (num % 1000);
-                genearteText(rem);
+                generateText(rem);
                 num = num / 1000;
                 i++;
             } else if (num > 0) {
@@ -265,28 +265,28 @@ public class PDFGenarator {
                 if (rem > 0) {
                     text = EmployeeConstant.denom[i - 1] + " " + text;
                 }
-                genearteText(rem);
+                generateText(rem);
                 num = num / 100;
                 i++;
             }
         }
+        
         return text;
     }
 
-    public static void genearteText(int num) {
+    public static void generateText(int num) {
         if (!(num > 9 && num < 19)) {
-            if (num % 10 > 0){
+            if (num % 10 > 0) {
                 text = EmployeeConstant.ones[(num % 10) - 1] + " " + text;
             }
-
             num = num / 10;
             if (num % 10 > 0) {
-            text = EmployeeConstant.tens[(num % 10) - 2] + " " + text;
+                text = EmployeeConstant.tens[(num % 10) - 2] + " " + text;
             }
 
             num = num / 10;
-            if (num > 0){
-            text = EmployeeConstant.hundreds[num - 1] + " " + text;
+            if (num > 0) {
+                text = EmployeeConstant.hundreds[num - 1] + " " + text;
             }
         } else {
             text = EmployeeConstant.splNums[num % 10] + " " + text;

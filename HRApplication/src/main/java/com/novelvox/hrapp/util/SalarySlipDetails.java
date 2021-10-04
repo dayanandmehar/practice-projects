@@ -1,5 +1,12 @@
 package com.novelvox.hrapp.util;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class calculates different components in salary slip 
  * 
@@ -59,23 +66,37 @@ public class SalarySlipDetails {
     
     private Double calculateIncomeTax() {
         Double tax = 0.0;
-        if (netTaxableIncome <= 250000)
-            tax = 0.0;
-        else if (netTaxableIncome <= 500000)
-            tax = 0.05 * (netTaxableIncome - 250000);
-        else if (netTaxableIncome <= 750000)
-            tax = (0.1 * (netTaxableIncome - 500000)) + (0.05 * 250000);
-        else if (netTaxableIncome <= 1000000)
-            tax = (0.15 * (netTaxableIncome - 750000)) + (0.1 * 250000) + (0.05 * 250000);
-        else if (netTaxableIncome <= 1250000)
-            tax = (0.2 * (netTaxableIncome - 1000000)) + (0.15 * 250000) + (0.1 * 250000) + (0.05 * 250000);
-        else if (netTaxableIncome <= 1500000)
-            tax = (0.25 * (netTaxableIncome - 1000000)) + (0.2 * 250000) + (0.15 * 250000) + (0.1 * 250000)
-                    + (0.05 * 250000);
-        else
-            tax = (0.3 * (netTaxableIncome - 1000000)) + (0.25 * 250000) + (0.2 * 250000) + (0.15 * 250000)
-                    + (0.1 * 250000) + (0.05 * 250000);
-        return tax/12;
+        try {
+            List<String> taxTableDataStrings = Files.readAllLines(Paths.get(EmployeeConstant.TAX_SLABS_FILE),
+                    StandardCharsets.UTF_8);
+            List<TaxSlab> taxSlabs = parseTaxTableFileData(taxTableDataStrings);
+
+            Double tempTaxableIc;
+            boolean limitReached = false;
+            for (int i = 0; i < taxSlabs.size() && !limitReached; i++) {
+                TaxSlab taxSlab = taxSlabs.get(i);
+                if (netTaxableIncome < taxSlab.getHigherLimit() || new Double(-1).equals(taxSlab.getHigherLimit())) {
+                    tempTaxableIc = netTaxableIncome;
+                    limitReached = true;
+                } else {
+                    tempTaxableIc = taxSlab.getHigherLimit();
+                }
+                tax = tax + (tempTaxableIc - taxSlab.getLowerLimit() + 1) * taxSlab.getRate() / 100;
+            }
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return tax / 12;
+    }
+
+    private List<TaxSlab> parseTaxTableFileData(List<String> taxTableDataStrings) {
+        List<TaxSlab> taxSlabs = new ArrayList<TaxSlab>();
+        for (String line : taxTableDataStrings) {
+            String[] tokens = line.split(",");
+            taxSlabs.add(new TaxSlab(Double.valueOf(tokens[0]), Double.valueOf(tokens[1]), Double.valueOf(tokens[2])));
+        }
+        return taxSlabs;
     }
 
     public Double getBasic() {

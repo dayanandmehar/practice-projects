@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JLabel;
 
@@ -22,6 +20,7 @@ public class EmployeeConstant {
     public static final String NV_LOGO = "./resources/NovelVox-Logo.jpg";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final SimpleDateFormat DATE_FORMATER = new SimpleDateFormat(EmployeeConstant.DATE_FORMAT);
+    public static final String TAX_SLABS_FILE = "./resources/TaxSlabs.csv";
 
     public static Font font3 = new Font("SansSerif", Font.BOLD, 30);
     public static Font font4 = new Font("SansSerif", Font.BOLD, 12);
@@ -31,7 +30,6 @@ public class EmployeeConstant {
     public static JLabel searchEmpHeading = new JLabel("Search Employee Details");
     public static JLabel updateEmpHeading = new JLabel("Update Employee Details");
     public static JLabel salarySlipHeading = new JLabel("Generate Salary Slip");
-    public static Map<Integer, String> months = new HashMap<>();
 
     // Tooltips
     public static final String TOOLTIP_EMP_ID = "Enter Unique Employee ID";
@@ -101,6 +99,6 @@ public class EmployeeConstant {
         salarySlipHeading.setBounds(50, 30, 600, 50);
 
         EmployeeHelper.createConnection();
-        EmployeeHelper.initializeMonths();
     }
+    
 }

@@ -9,8 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -171,21 +174,6 @@ public class EmployeeHelper {
         }
     }
 
-    public static void initializeMonths() {
-        EmployeeConstant.months.put(Calendar.JANUARY, "January");
-        EmployeeConstant.months.put(Calendar.FEBRUARY, "February");
-        EmployeeConstant.months.put(Calendar.MARCH, "March");
-        EmployeeConstant.months.put(Calendar.APRIL, "April");
-        EmployeeConstant.months.put(Calendar.MAY, "May");
-        EmployeeConstant.months.put(Calendar.JUNE, "June");
-        EmployeeConstant.months.put(Calendar.JULY, "July");
-        EmployeeConstant.months.put(Calendar.AUGUST, "August");
-        EmployeeConstant.months.put(Calendar.SEPTEMBER, "September");
-        EmployeeConstant.months.put(Calendar.OCTOBER, "October");
-        EmployeeConstant.months.put(Calendar.NOVEMBER, "November");
-        EmployeeConstant.months.put(Calendar.DECEMBER, "December");
-    }
-
     public String[] getPreviousSixMonths() {
         String[] preMonths = new String[7];
         preMonths[0] = EmployeeConstant.SELECT_DEFAULT;
@@ -200,7 +188,7 @@ public class EmployeeHelper {
                 month = 11;
                 year = year - 1;
             }
-            preMonths[i] = EmployeeConstant.months.get(month) + " " + year;
+            preMonths[i] = Month.of(month+1).getDisplayName(TextStyle.FULL, Locale.US) + " " + year;
             i++;
         }
         return preMonths;
