@@ -1,0 +1,1265 @@
+schema_version: 1.0
+cluster:
+- cluster_name: NetAct_cluster
+  DRS_automation_level: fullyAutomated
+  DRS_enabled: true
+  DRS_power_management: false
+  HA_VM_monitoring: vmMonitoringOnly
+  HA_VM_monitoring_enabled: true
+  HA_VM_monitoring_failure_interval: 60
+  HA_VM_monitoring_level: vmMonitoringOnly
+  HA_VM_monitoring_max_failure_window: 86400
+  HA_VM_monitoring_max_failures: 3
+  HA_VM_monitoring_min_up_time: 240
+  HA_admission_control: true
+  HA_admission_control_policy: 1
+  HA_cpu: 17
+  HA_enabled: true
+  HA_host_isolation_response: powerOff
+  HA_host_monitoring_status: enabled
+  HA_memory: 17
+  HA_virtual_machine_options: medium
+  swapfile_location: vmDirectory
+  vm_restart_priority:
+  - type: high
+    vm:
+    - name: vm3
+    - name: vm5
+datastore:
+- datastore_name: VMGuestDisk1
+  block_sizeMB: 1
+  path:
+  - path_name: VMGuestDisk1_path1
+    path:
+  sioc:
+    enabled: true
+    congestion_threshold: 30
+    congestion_threshold_mode: manual
+    percent_of_peak_throughput: 90
+- datastore_name: VMGuestDisk2
+  block_sizeMB: 1
+  path:
+  - path_name: VMGuestDisk2_path1
+    path:
+  sioc:
+    enabled: true
+    congestion_threshold: 30
+    congestion_threshold_mode: manual
+    percent_of_peak_throughput: 90
+- datastore_name: VMGuestDisk3
+  block_sizeMB: 1
+  path:
+  - path_name: VMGuestDisk3_path1
+    path:
+  sioc:
+    enabled: true
+    congestion_threshold: 30
+    congestion_threshold_mode: manual
+    percent_of_peak_throughput: 90
+- datastore_name: DBArch
+  block_sizeMB: 1
+  path:
+  - path_name: DBArch_path1
+    path:
+  sioc:
+    enabled: false
+    congestion_threshold: 30
+    congestion_threshold_mode: automatic
+    percent_of_peak_throughput: 90
+- datastore_name: DBRedo
+  block_sizeMB: 1
+  path:
+  - path_name: DBRedo_path1
+    path:
+  sioc:
+    enabled: false
+    congestion_threshold: 30
+    congestion_threshold_mode: automatic
+    percent_of_peak_throughput: 90
+- datastore_name: DBData
+  block_sizeMB: 1
+  path:
+  - path_name: DBData_path1
+    path:
+  sioc:
+    enabled: false
+    congestion_threshold: 30
+    congestion_threshold_mode: automatic
+    percent_of_peak_throughput: 90
+- datastore_name: NFSGlobal
+  block_sizeMB: 1
+  path:
+  - path_name: NFSGlobal_path1
+    path:
+  sioc:
+    enabled: false
+    congestion_threshold: 30
+    congestion_threshold_mode: automatic
+    percent_of_peak_throughput: 90
+- datastore_name: PMDatastore
+  block_sizeMB: 1
+  path:
+  - path_name: PMDatastore_path1
+    path:
+  sioc:
+    enabled: false
+    congestion_threshold: 30
+    congestion_threshold_mode: automatic
+    percent_of_peak_throughput: 90
+- datastore_name: DBFB
+  block_sizeMB: 1
+  path:
+  - path_name: DBFB_path1
+    path:
+  sioc:
+    enabled: false
+    congestion_threshold: 30
+    congestion_threshold_mode: automatic
+    percent_of_peak_throughput: 90
+drs_group:
+- drs_group_name: LB
+  type: vm
+  db_allowed: false
+- drs_group_name: LDAP
+  type: vm
+  db_allowed: false
+- drs_group_name: UNIFY_PM_BACKEND_1
+  type: vm
+  db_allowed: false
+- drs_group_name: COMMON_MEDIATIONS
+  type: vm
+  db_allowed: false
+- drs_group_name: FM_PIPE
+  type: vm
+  db_allowed: false
+- drs_group_name: NBI3GCPM
+  type: vm
+  db_allowed: false
+- drs_group_name: UNIFY_WAS_1
+  type: vm
+  db_allowed: false
+- drs_group_name: UNIFY_WAS_2
+  type: vm
+  db_allowed: false
+- drs_group_name: NMS_AD
+  type: vm
+  db_allowed: false
+- drs_group_name: IHS
+  type: vm
+  db_allowed: false
+- drs_group_name: SLC-1
+  type: vm
+  db_allowed: false
+- drs_group_name: SLC-2
+  type: vm
+  db_allowed: false
+- drs_group_name: NETGUARD
+  type: vm
+  db_allowed: false
+drs_rule:
+- drs_rule_name: LB-1 and LB-2
+  type: separate
+  mandatory: false
+  vm_drs_group: LB
+- drs_rule_name: ldap-1 and ldap-2
+  type: separate
+  mandatory: false
+  vm_drs_group: LDAP
+- drs_rule_name: Unify PM backend-1
+  type: separate
+  mandatory: false
+  vm_drs_group: UNIFY_PM_BACKEND_1
+- drs_rule_name: Common mediations
+  type: separate
+  mandatory: false
+  vm_drs_group: COMMON_MEDIATIONS
+- drs_rule_name: fm-pipe
+  type: separate
+  mandatory: false
+  vm_drs_group: FM_PIPE
+- drs_rule_name: nbi3gcpm
+  type: separate
+  mandatory: false
+  vm_drs_group: NBI3GCPM
+- drs_rule_name: Unify was-1
+  type: separate
+  mandatory: false
+  vm_drs_group: UNIFY_WAS_1
+- drs_rule_name: Unify was-2
+  type: separate
+  mandatory: false
+  vm_drs_group: UNIFY_WAS_2
+- drs_rule_name: NMgr Ad and NMgr Ad
+  type: separate
+  mandatory: false
+  vm_drs_group: NMS_AD
+- drs_rule_name: IHS-1 and IHS-2
+  type: separate
+  mandatory: false
+  vm_drs_group: IHS
+- drs_rule_name: SLC-1 and SLC-2
+  type: separate
+  mandatory: false
+  vm_drs_group: SLC-1
+- drs_rule_name: SLC-3 and SLC-4
+  type: separate
+  mandatory: false
+  vm_drs_group: SLC-2
+- drs_rule_name: NetGuard-1 and NetGuard-2
+  type: separate
+  mandatory: false
+  vm_drs_group: NETGUARD
+global:
+  node_manager_installation_image: /var/opt/NodeManager/install/
+host:
+- cluster_name: NetAct_cluster
+  default_vlan: 0
+  login: root
+  os: esxi
+  aqdt:
+    queue_full_sample_size: 0
+    queue_full_threshold: 8
+    disk_max_io_size: 32767
+  iops:
+    value: 1
+    vendor:
+    description:
+    satp: VMW_SATP_ALUA
+- cluster_name: NetAct_cluster
+  default_vlan: 0
+  login: root
+  os: esxi
+  aqdt:
+    queue_full_sample_size: 0
+    queue_full_threshold: 8
+    disk_max_io_size: 32767
+  iops:
+    value: 1
+    vendor:
+    description:
+    satp: VMW_SATP_ALUA
+- cluster_name: NetAct_cluster
+  default_vlan: 0
+  login: root
+  os: esxi
+  aqdt:
+    queue_full_sample_size: 0
+    queue_full_threshold: 8
+    disk_max_io_size: 32767
+  iops:
+    value: 1
+    vendor:
+    description:
+    satp: VMW_SATP_ALUA
+- cluster_name: NetAct_cluster
+  default_vlan: 0
+  login: root
+  os: esxi
+  aqdt:
+    queue_full_sample_size: 0
+    queue_full_threshold: 8
+    disk_max_io_size: 32767
+  iops:
+    value: 1
+    vendor:
+    description:
+    satp: VMW_SATP_ALUA
+- cluster_name: NetAct_cluster
+  default_vlan: 0
+  login: root
+  os: esxi
+  aqdt:
+    queue_full_sample_size: 0
+    queue_full_threshold: 8
+    disk_max_io_size: 32767
+  iops:
+    value: 1
+    vendor:
+    description:
+    satp: VMW_SATP_ALUA
+- cluster_name: NetAct_cluster
+  default_vlan: 0
+  login: root
+  os: esxi
+  aqdt:
+    queue_full_sample_size: 0
+    queue_full_threshold: 8
+    disk_max_io_size: 32767
+  iops:
+    value: 1
+    vendor:
+    description:
+    satp: VMW_SATP_ALUA
+hosts_common:
+  snmp_community_string: cpfpublic
+  snmp_host:
+  snmp_port: '50162'
+res_pool:
+- res_pool_name: NetActVMpool
+  cluster_name: NetAct_cluster
+  cpu_share_level: normal
+  mem_share_level: normal
+role:
+- role_name: vmanager_role
+  privilege:
+  - privilege_name: Sessions.TerminateSession
+  - privilege_name: Sessions.ValidateSession
+  - privilege_name: Sessions.GlobalMessage
+  - privilege_name: Sessions.ImpersonateUser
+  - privilege_name: VirtualMachine.Interact.PowerOn
+  - privilege_name: VirtualMachine.Interact.Reset
+  - privilege_name: Extension.Register
+  - privilege_name: Extension.Update
+  - privilege_name: Extension.Unregister
+user:
+- user_name: vmanager
+  description: password applies only to scratch install
+  password: vmanpass
+  role:
+  - role_name: vmanager_role
+vcenter:
+  vm_name: vcenterappliance
+  cluster_name: NetAct_cluster
+  datastore_name: VMGuestDisk1
+  storage_format: eagerZeroedThick
+vds:
+- vds_name: VDSwitch1
+  version: 5.1.0
+  enabled: false
+  portgroup:
+  - portgroup_name: Management Network
+    portgroup_type: pg_Management_Network
+    vlanid: 0
+  - portgroup_name: VM Network SB
+    portgroup_type: pg_VM_Network
+    vlanid: 0
+  - portgroup_name: VM Network NB
+    portgroup_type: pg_VM_Network
+    vlanid: 0
+  - portgroup_name: vMotion Network
+    portgroup_type: pg_vMotion_Network
+    vlanid: 0
+  - portgroup_name: iSCSI Network
+    portgroup_type: pg_iSCSI_Network
+    vlanid: 0
+vm:
+- vm_name: vm3
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  drs_group_name: LDAP
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 40960
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 81920
+    storage_format: eagerZeroedThick
+  type: dns
+  guest_os: rhel7_64Guest
+  memoryMB: 6144
+  memory_reservation: 6144
+  network_interface:
+  - network_interface_name: vm3_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: ldap-1
+  vcpu: 4
+- vm_name: vm4
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 87040
+    storage_format: eagerZeroedThick
+  - disk_name: vgarc
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 1
+    sizeMB: 2073600
+    storage_format: eagerZeroedThick
+  - disk_name: vgredo
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 2
+    scsi_id: 2
+    sizeMB: 60825
+    storage_format: eagerZeroedThick
+  - disk_name: vgdb
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 3
+    scsi_id: 3
+    sizeMB: 1382400
+    storage_format: eagerZeroedThick
+  - disk_name: vgdbfb
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 5
+    sizeMB:  2097152
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 6187520
+    storage_format: eagerZeroedThick
+  type: db
+  guest_os: rhel7_64Guest
+  memoryMB: 71680
+  memory_reservation: 59136
+  network_interface:
+  - network_interface_name: vm4_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 1
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 2
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 3
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: db
+  vcpu: 11
+- vm_name: vm5
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: LDAP
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 46080
+    storage_format: eagerZeroedThick
+  - disk_name: vgglobal
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 4
+    sizeMB: 266240
+    storage_format: eagerZeroedThick
+  - disk_name: vghome
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 2
+    scsi_id: 5
+    sizeMB: 18432
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 488448
+    storage_format: eagerZeroedThick
+  - disk_name: vgwasdumps
+    datastore_name: 
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 6
+    sizeMB: 46080
+    storage_format: eagerZeroedThick
+  type: nfs
+  guest_os: rhel7_64Guest
+  memoryMB: 7168
+  memory_reservation: 7168
+  network_interface:
+  - network_interface_name: vm5_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 1
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 2
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 3
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: ldap-2
+  vcpu: 6
+- vm_name: vm6
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  drs_group_name: LB
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 30720
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 61440
+    storage_format: eagerZeroedThick
+  type: lb
+  guest_os: rhel7_64Guest
+  memoryMB: 4096
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm6_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: lb-1
+  vcpu: 4
+- vm_name: vm7
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 30720
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 61440
+    storage_format: eagerZeroedThick
+  type: selfmon
+  guest_os: rhel7_64Guest
+  memoryMB: 3072
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm7_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: selfmonitor
+  vcpu: 2
+- vm_name: vm8
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 40960
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 81920
+    storage_format: eagerZeroedThick
+  type: nbi3gc
+  guest_os: rhel7_64Guest
+  memoryMB: 6144
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm8_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-nbi3gc
+  vcpu: 3
+- vm_name: vm9
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 56320
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 112640
+    storage_format: eagerZeroedThick
+  type: nwi3
+  guest_os: rhel7_64Guest
+  memoryMB: 5120
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm9_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-nwi3
+  vcpu: 5
+- vm_name: vm10
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 30720
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 61440
+    storage_format: eagerZeroedThick
+  type: q3
+  guest_os: rhel7_64Guest
+  memoryMB: 6144
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm10_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-q3
+  vcpu: 4
+- vm_name: vm11
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: LB
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 30720
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 61440
+    storage_format: eagerZeroedThick
+  type: lb
+  guest_os: rhel7_64Guest
+  memoryMB: 4096
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm11_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: lb-2
+  vcpu: 4
+- vm_name: vm12
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 102400
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 307200
+    storage_format: eagerZeroedThick
+  - disk_name: vgadm
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 5
+    sizeMB: 51200
+    storage_format: eagerZeroedThick
+  type: xoh
+  guest_os: rhel7_64Guest
+  memoryMB: 10240
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm12_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 1
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-nx2s-xoh
+  vcpu: 8
+- vm_name: vm13
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 133120
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 266240
+    storage_format: eagerZeroedThick
+  type: nbi
+  guest_os: rhel7_64Guest
+  memoryMB: 6144
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm13_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: nbi-ne3s
+  vcpu: 6
+- vm_name: vm14
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: NBI3GCPM
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 61440
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 122880
+    storage_format: eagerZeroedThick
+  type: nbi3gcpm
+  guest_os: rhel7_64Guest
+  memoryMB: 6144
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm14_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-nbi3gcpm-1
+  vcpu: 5
+- vm_name: vm15
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  drs_group_name: NBI3GCPM
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 61440
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 122880
+    storage_format: eagerZeroedThick
+  type: nbi3gcpm
+  guest_os: rhel7_64Guest
+  memoryMB: 6144
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm15_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-nbi3gcpm-2
+  vcpu: 5
+- vm_name: vm16
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  drs_group_name: COMMON_MEDIATIONS
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 56320
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 112640
+    storage_format: eagerZeroedThick
+  - disk_name: vgisdk
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 1
+    sizeMB: 87040
+    storage_format: eagerZeroedThick
+  type: common
+  guest_os: rhel7_64Guest
+  memoryMB: 13312
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm16_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-common-mediation-1
+  vcpu: 5
+- vm_name: vm17
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: COMMON_MEDIATIONS
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 56320
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 112640
+    storage_format: eagerZeroedThick
+  - disk_name: vgisdk
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 1
+    sizeMB: 87040
+    storage_format: eagerZeroedThick
+  type: common
+  guest_os: rhel7_64Guest
+  memoryMB: 13312
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm17_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: jbi-common-mediation-2
+  vcpu: 5
+- vm_name: vm18
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  drs_group_name: FM_PIPE
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 40960
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 81920
+    storage_format: eagerZeroedThick
+  type: fm
+  guest_os: rhel7_64Guest
+  memoryMB: 7168
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm18_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: fm-pipe-1
+  vcpu: 4
+- vm_name: vm19
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  drs_group_name: FM_PIPE
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 40960
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 81920
+    storage_format: eagerZeroedThick
+  type: fm
+  guest_os: rhel7_64Guest
+  memoryMB: 7168
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm19_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: fm-pipe-2
+  vcpu: 4
+- vm_name: vm20
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: UNIFY_WAS_1
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 138240
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 276480
+    storage_format: eagerZeroedThick
+  type: was
+  guest_os: rhel7_64Guest
+  memoryMB: 33792
+  memory_reservation: 33792
+  network_interface:
+  - network_interface_name: vm20_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: was-1
+  vcpu: 8
+- vm_name: vm21
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  drs_group_name: UNIFY_WAS_1
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 138240
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 276480
+    storage_format: eagerZeroedThick
+  type: was
+  guest_os: rhel7_64Guest
+  memoryMB: 33792
+  memory_reservation: 33792
+  network_interface:
+  - network_interface_name: vm21_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: was-2
+  vcpu: 8
+- vm_name: vm22
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk2
+  drs_group_name: UNIFY_WAS_2
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 138240
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 276480
+    storage_format: eagerZeroedThick
+  type: was
+  guest_os: rhel7_64Guest
+  memoryMB: 33792
+  memory_reservation: 33792
+  network_interface:
+  - network_interface_name: vm22_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: was-3
+  vcpu: 8
+- vm_name: vm23
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: UNIFY_WAS_2
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 138240
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 276480
+    storage_format: eagerZeroedThick
+  type: was
+  guest_os: rhel7_64Guest
+  memoryMB: 33792
+  memory_reservation: 33792
+  network_interface:
+  - network_interface_name: vm23_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: was-4
+  vcpu: 8
+- vm_name: vm66
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: UNIFY_PM_BACKEND_1
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 46080
+    storage_format: eagerZeroedThick
+  - disk_name: vgrep
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 1
+    sizeMB: 46080
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 184320
+    storage_format: eagerZeroedThick
+  type: pm
+  guest_os: rhel7_64Guest
+  memoryMB: 12288
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm66_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 1
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: pm-1
+  vcpu: 9
+- vm_name: vm67
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk1
+  drs_group_name: UNIFY_PM_BACKEND_1
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 46080
+    storage_format: eagerZeroedThick
+  - disk_name: vgrep
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 1
+    scsi_id: 1
+    sizeMB: 46080
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 184320
+    storage_format: eagerZeroedThick
+  type: pm
+  guest_os: rhel7_64Guest
+  memoryMB: 12288
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm67_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  - id: 1
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: pm-2
+  vcpu: 9
+- vm_name: vm85
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: IHS
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 40960
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 81920
+    storage_format: eagerZeroedThick
+  type: ihs
+  guest_os: rhel7_64Guest
+  memoryMB: 4096
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm85_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: ihs-1
+  vcpu: 4
+- vm_name: vm86
+  res_pool_name: NetActVMpool
+  datastore_name: VMGuestDisk3
+  drs_group_name: IHS
+  disk:
+  - disk_name: netact_rhel7_base_45
+    datastore_name:
+    diskMode: persistent
+    scsi_controller_id: 0
+    scsi_id: 0
+    sizeMB: 40960
+    storage_format: eagerZeroedThick
+  - disk_name: vgbackup
+    datastore_name:
+    diskMode: independent_persistent
+    scsi_controller_id: 0
+    scsi_id: 8
+    sizeMB: 81920
+    storage_format: eagerZeroedThick
+  type: ihs
+  guest_os: rhel7_64Guest
+  memoryMB: 4096
+  memory_reservation: 0
+  network_interface:
+  - network_interface_name: vm86_nic1
+    vds_name: VDSwitch1
+    portgroup_name: VM Network SB
+    network_adapter_type: Vmxnet3
+  scsi_controller:
+  - id: 0
+    scsi_controller_type: ParaVirtualSCSI
+  unique_id: ihs-2
+  vcpu: 4
