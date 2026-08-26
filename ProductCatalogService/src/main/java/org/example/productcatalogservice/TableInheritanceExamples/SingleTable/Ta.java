@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.TableInheritanceExamples.SingleTable;
+package org.example.productcatalogservice.TableInheritanceExamples.SingleTable;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.models;
+package org.example.productcatalogservice.models;
 
 public enum Status {
     ACTIVE,

@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.models;
+package org.example.productcatalogservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;

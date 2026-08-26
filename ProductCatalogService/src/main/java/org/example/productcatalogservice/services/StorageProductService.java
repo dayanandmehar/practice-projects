@@ -1,8 +1,8 @@
-package org.example.productcatalogservice_feb2026.services;
+package org.example.productcatalogservice.services;
 
-import org.example.productcatalogservice_feb2026.models.Product;
-import org.example.productcatalogservice_feb2026.models.Status;
-import org.example.productcatalogservice_feb2026.repos.ProductRepo;
+import org.example.productcatalogservice.models.Product;
+import org.example.productcatalogservice.models.Status;
+import org.example.productcatalogservice.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,8 @@ public class StorageProductService implements IProductService {
     public Product replaceProduct(Long id, Product product) {
         Optional<Product> productOptional =  productRepo.findById(id);
         if(productOptional.isPresent()) {
+            product.setId(id);
+            product.setLastUpdatedAt(new Date());
             return productRepo.save(product);
         }
 
@@ -40,13 +42,13 @@ public class StorageProductService implements IProductService {
 
     @Override
     public Product addProduct(Product product) {
-        Optional<Product> productOptional =  productRepo.findById(product.getId());
-        if(productOptional.isEmpty()) {
+        if (product.getId() == null || productRepo.findById(product.getId()).isEmpty()) {
+            product.setStatus(Status.ACTIVE);
+            product.setCreatedAt(new Date());
+            product.setLastUpdatedAt(new Date());
             return productRepo.save(product);
         }
-
-        // We can throw an exception also that ProductAlreadyFound
-        return productOptional.get();
+        throw new IllegalArgumentException("Product with id " + product.getId() + " already exists");
     }
 
     @Override
@@ -69,6 +71,8 @@ public class StorageProductService implements IProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepo.findAll();
+        return productRepo.findAll().stream()
+                .filter(product -> product.getStatus() == Status.ACTIVE)
+                .toList();
     }
 }

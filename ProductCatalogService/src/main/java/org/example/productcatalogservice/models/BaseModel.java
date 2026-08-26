@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.models;
+package org.example.productcatalogservice.models;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

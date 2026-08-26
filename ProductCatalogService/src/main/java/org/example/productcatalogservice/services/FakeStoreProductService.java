@@ -1,8 +1,8 @@
-package org.example.productcatalogservice_feb2026.services;
+package org.example.productcatalogservice.services;
 
-import org.example.productcatalogservice_feb2026.dtos.FakeStoreProductDto;
-import org.example.productcatalogservice_feb2026.models.Category;
-import org.example.productcatalogservice_feb2026.models.Product;
+import org.example.productcatalogservice.dtos.FakeStoreProductDto;
+import org.example.productcatalogservice.models.Category;
+import org.example.productcatalogservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
@@ -17,6 +17,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Arrays;
 
 @Service
 public class FakeStoreProductService implements IProductService {
@@ -65,19 +66,33 @@ public class FakeStoreProductService implements IProductService {
     // ToDo : by learners
     @Override
     public Product addProduct(Product product) {
-        return null;
+        ResponseEntity<FakeStoreProductDto> response = requestForEntity(
+                HttpMethod.POST, "https://fakestoreapi.com/products", from(product),
+                FakeStoreProductDto.class);
+        return response.hasBody() && response.getStatusCode().is2xxSuccessful()
+                ? from(response.getBody()) : null;
     }
 
     // ToDo : by learners
     @Override
     public void deleteProduct(Long id) {
-
+        ResponseEntity<Void> response = requestForEntity(
+                HttpMethod.DELETE, "https://fakestoreapi.com/products/{id}", null,
+                Void.class, id);
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new IllegalStateException("Unable to delete product " + id);
+        }
     }
 
     // ToDo : by learners
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        ResponseEntity<FakeStoreProductDto[]> response = restTemplateBuilder.build()
+                .getForEntity("https://fakestoreapi.com/products", FakeStoreProductDto[].class);
+        if (!response.hasBody() || !response.getStatusCode().is2xxSuccessful()) {
+            return List.of();
+        }
+        return Arrays.stream(response.getBody()).map(this::from).toList();
     }
 
 

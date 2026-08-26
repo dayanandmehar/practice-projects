@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.controllers;
+package org.example.productcatalogservice.controllers;
 
 import lombok.Getter;
 import org.springframework.web.bind.annotation.GetMapping;

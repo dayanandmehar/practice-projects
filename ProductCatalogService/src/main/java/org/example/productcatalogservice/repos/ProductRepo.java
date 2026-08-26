@@ -1,6 +1,6 @@
-package org.example.productcatalogservice_feb2026.repos;
+package org.example.productcatalogservice.repos;
 
-import org.example.productcatalogservice_feb2026.models.Product;
+import org.example.productcatalogservice.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 //@Repository
 public interface ProductRepo extends JpaRepository<Product,Long> {
-        Page<Product> findProductByName(String query, Pageable pageable);
+        Page<Product> findByNameContainingIgnoreCaseAndStatus(String query, org.example.productcatalogservice.models.Status status, Pageable pageable);
 
         Optional<Product> findById(Long id);
 

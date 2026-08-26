@@ -1,7 +1,8 @@
-package org.example.productcatalogservice_feb2026.services;
+package org.example.productcatalogservice.services;
 
-import org.example.productcatalogservice_feb2026.models.Product;
-import org.example.productcatalogservice_feb2026.repos.ProductRepo;
+import org.example.productcatalogservice.models.Product;
+import org.example.productcatalogservice.models.Status;
+import org.example.productcatalogservice.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,11 @@ public class SearchService {
         Sort sortByPrice = Sort.by("price");
         Sort sortByIdDesc = Sort.by("id").descending();
         Sort finalSort = sortByPrice.and(sortByIdDesc);
-      return productRepo.findProductByName(query, PageRequest.of(pageNumber,pageSize,finalSort));
+      int safePageSize = pageSize == null ? 20 : Math.min(Math.max(pageSize, 1), 100);
+      int safePageNumber = pageNumber == null ? 0 : Math.max(pageNumber, 0);
+      String safeQuery = query == null ? "" : query.trim();
+      return productRepo.findByNameContainingIgnoreCaseAndStatus(
+              safeQuery, Status.ACTIVE, PageRequest.of(safePageNumber, safePageSize, finalSort));
     }
 }
 

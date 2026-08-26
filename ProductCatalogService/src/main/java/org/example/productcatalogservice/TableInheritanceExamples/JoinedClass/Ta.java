@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.TableInheritanceExamples.JoinedClass;
+package org.example.productcatalogservice.TableInheritanceExamples.JoinedClass;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;

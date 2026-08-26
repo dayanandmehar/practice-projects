@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026;
+package org.example.productcatalogservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

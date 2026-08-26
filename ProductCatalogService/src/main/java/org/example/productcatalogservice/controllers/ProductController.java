@@ -1,12 +1,11 @@
-package org.example.productcatalogservice_feb2026.controllers;
+package org.example.productcatalogservice.controllers;
 
-import org.example.productcatalogservice_feb2026.dtos.CategoryDto;
-import org.example.productcatalogservice_feb2026.dtos.ProductDto;
-import org.example.productcatalogservice_feb2026.models.Category;
-import org.example.productcatalogservice_feb2026.models.Product;
-import org.example.productcatalogservice_feb2026.services.IProductService;
+import org.example.productcatalogservice.dtos.CategoryDto;
+import org.example.productcatalogservice.dtos.ProductDto;
+import org.example.productcatalogservice.models.Category;
+import org.example.productcatalogservice.models.Product;
+import org.example.productcatalogservice.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
-package org.example.productcatalogservice_feb2026.services;
+package org.example.productcatalogservice.services;
 
-import org.example.productcatalogservice_feb2026.models.Product;
+import org.example.productcatalogservice.models.Product;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.example.productcatalogservice_feb2026.controllers;
+package org.example.productcatalogservice.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

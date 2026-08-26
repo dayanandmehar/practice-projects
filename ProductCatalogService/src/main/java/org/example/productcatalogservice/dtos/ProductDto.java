@@ -1,8 +1,7 @@
-package org.example.productcatalogservice_feb2026.dtos;
+package org.example.productcatalogservice.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.productcatalogservice_feb2026.models.Category;
 
 @Setter
 @Getter
