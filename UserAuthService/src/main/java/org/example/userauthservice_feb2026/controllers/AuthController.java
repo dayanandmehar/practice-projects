@@ -4,6 +4,8 @@ import org.example.userauthservice_feb2026.dtos.LoginRequestDto;
 import org.example.userauthservice_feb2026.dtos.RoleDto;
 import org.example.userauthservice_feb2026.dtos.SignupRequestDto;
 import org.example.userauthservice_feb2026.dtos.UserDto;
+import org.example.userauthservice_feb2026.dtos.ProfileUpdateRequestDto;
+import org.example.userauthservice_feb2026.dtos.PasswordResetRequestDto;
 import org.example.userauthservice_feb2026.models.Role;
 import org.example.userauthservice_feb2026.models.User;
 import org.example.userauthservice_feb2026.services.IAuthService;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,21 @@ public class AuthController {
     public UserDto login(@RequestBody LoginRequestDto loginRequestDto) {
        User user = authService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
        return from(user);
+    }
+
+    @GetMapping("/profile")
+    public UserDto profile(@RequestParam String email) {
+        return from(authService.getProfile(email));
+    }
+
+    @PutMapping("/profile")
+    public UserDto updateProfile(@RequestParam String email, @RequestBody ProfileUpdateRequestDto request) {
+        return from(authService.updateProfile(email, request.getName(), request.getPhoneNumber()));
+    }
+
+    @PostMapping("/password/reset")
+    public void resetPassword(@RequestParam String email, @RequestBody PasswordResetRequestDto request) {
+        authService.resetPassword(email, request.getCurrentPassword(), request.getNewPassword());
     }
 
     private UserDto from(User user) {
